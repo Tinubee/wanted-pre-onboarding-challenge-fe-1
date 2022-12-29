@@ -3,6 +3,7 @@ import Home from "./screens/Home";
 import Root from "./Root";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
+import CreateAccount from "./screens/CreateAccount";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "auth",
         element: <Login />,
+      },
+      {
+        path: "sign",
+        element: <CreateAccount />,
       },
     ],
     errorElement: <NotFound />,

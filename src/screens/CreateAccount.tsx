@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { login } from "../api";
+import { createAccount } from "../api";
 
 const Input = styled.input`
   font-size: 18px;
@@ -10,8 +9,8 @@ const Input = styled.input`
   width: 30%;
 `;
 
-function Login() {
-  const { register, handleSubmit, getValues, setValue } = useForm({
+function CreateAccount() {
+  const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
     defaultValues: {
       email: "",
@@ -21,16 +20,12 @@ function Login() {
 
   const onSubmitValid = async () => {
     const userInfo = getValues();
-    const result = await login(userInfo);
-
-    const { message, token } = result;
-
-    setValue("email", "");
-    setValue("password", "");
+    const result = await createAccount(userInfo);
+    console.log(result);
   };
   return (
     <div>
-      <h1>Login Form</h1>
+      <h1>CreateAccount Form</h1>
       <form onSubmit={handleSubmit(onSubmitValid)}>
         <Input
           {...register("email", {
@@ -44,11 +39,10 @@ function Login() {
           })}
           placeholder="Password"
         />
-        <button type="submit">Login</button>
+        <button type="submit">CreateAccount</button>
       </form>
-      <Link to={"/sign"}>Create Account</Link>
     </div>
   );
 }
 
-export default Login;
+export default CreateAccount;
