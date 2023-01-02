@@ -4,6 +4,7 @@ import Root from "./Root";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
 import CreateAccount from "./screens/CreateAccount";
+import Todo from "./screens/Todo";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "sign",
         element: <CreateAccount />,
+      },
+      {
+        path: "todo",
+        element: <Todo />,
       },
     ],
     errorElement: <NotFound />,

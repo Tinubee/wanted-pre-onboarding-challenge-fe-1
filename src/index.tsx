@@ -5,6 +5,7 @@ import router from "./Router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { darkTheme } from "./theme";
+import { RecoilRoot } from "recoil";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -79,10 +80,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
-      <ThemeProvider theme={darkTheme}>
-        <GlobalStyle />
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <RecoilRoot>
+        <ThemeProvider theme={darkTheme}>
+          <GlobalStyle />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </RecoilRoot>
     </QueryClientProvider>
   </React.StrictMode>
 );
