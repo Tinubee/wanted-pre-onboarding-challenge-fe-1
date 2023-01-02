@@ -9,11 +9,16 @@ const TopBox = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
+  font-weight: 600;
+  font-size: 20px;
 `;
 const Col = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 35px;
+`;
+const Logout = styled.span`
+  cursor: pointer;
 `;
 
 function Header() {
@@ -36,7 +41,7 @@ function Header() {
       <Col>
         <Link to={logIn ? "/todo" : "/"}>Home</Link>
         {logIn ? (
-          <span onClick={handleLogout}>LogOut</span>
+          <Logout onClick={handleLogout}>LogOut</Logout>
         ) : (
           <Link to={"/auth"}>Login</Link>
         )}

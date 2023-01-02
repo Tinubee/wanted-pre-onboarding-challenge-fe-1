@@ -70,6 +70,7 @@ function Login() {
             },
           })}
           placeholder="Password"
+          type="password"
           hasError={Boolean(errors?.password?.message)}
         />
         <span>{errors?.password?.message}</span>

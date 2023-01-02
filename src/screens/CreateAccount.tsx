@@ -110,6 +110,7 @@ function CreateAccount() {
             },
           })}
           placeholder="Password"
+          type="password"
           hasError={Boolean(errors?.password?.message)}
         />
         <span>{errors?.password?.message}</span>
@@ -122,6 +123,7 @@ function CreateAccount() {
             },
           })}
           placeholder="Password Again"
+          type="password"
           hasError={Boolean(errors?.password2?.message)}
         />
         <span>{errors?.password2?.message}</span>
