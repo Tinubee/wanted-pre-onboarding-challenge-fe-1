@@ -63,7 +63,7 @@ function Todo() {
   useEffect(() => {
     getTodoList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [toDos]);
 
   return (
     <Container>

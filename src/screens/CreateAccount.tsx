@@ -5,6 +5,18 @@ import styled from "styled-components";
 import { createAccount } from "../api";
 import { Container } from "./Todo";
 
+export const Title = styled.h1`
+  font-size: 30px;
+  font-weight: 400;
+`;
+
+export const Error = styled.span`
+  color: red;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 5px;
+`;
+
 export const Input = styled.input<{ hasError: boolean }>`
   width: 100%;
   border-radius: 3px;
@@ -89,7 +101,7 @@ function CreateAccount() {
   return (
     <Container>
       <FormBox>
-        <h1>회원 가입</h1>
+        <Title>회원 가입</Title>
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
             {...register("email", {
@@ -102,7 +114,7 @@ function CreateAccount() {
             placeholder="Email"
             hasError={Boolean(errors?.email?.message)}
           />
-          <span>{errors?.email?.message}</span>
+          <Error>{errors?.email?.message}</Error>
           <Input
             {...register("password", {
               required: "비밀번호를 입력해주세요.",
@@ -115,7 +127,7 @@ function CreateAccount() {
             type="password"
             hasError={Boolean(errors?.password?.message)}
           />
-          <span>{errors?.password?.message}</span>
+          <Error>{errors?.password?.message}</Error>
           <Input
             {...register("password2", {
               required: "비밀번호를 입력해주세요.",
@@ -128,7 +140,7 @@ function CreateAccount() {
             type="password"
             hasError={Boolean(errors?.password2?.message)}
           />
-          <span>{errors?.password2?.message}</span>
+          <Error>{errors?.password2?.message}</Error>
           <Button disabled={Object.keys(errors).length !== 0} type="submit">
             Create Account
           </Button>

@@ -1,4 +1,9 @@
-import { faPen, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPen,
+  faSave,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -108,7 +113,12 @@ function TodoContent() {
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Icon>
-            <FontAwesomeIcon icon={faPen} onClick={handleModify} />
+            {isChange ? (
+              <FontAwesomeIcon icon={faPen} onClick={handleModify} />
+            ) : (
+              <FontAwesomeIcon icon={faXmark} onClick={handleModify} />
+            )}
+
             {isChange ? (
               ""
             ) : (

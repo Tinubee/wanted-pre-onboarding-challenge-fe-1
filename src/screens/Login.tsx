@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { login } from "../api";
 import { isLoggedIn } from "../atoms";
-import { Button, FormBox, Input } from "./CreateAccount";
+import { Button, Error, FormBox, Input, Title } from "./CreateAccount";
 import { Container } from "./Todo";
 
 function Login() {
@@ -24,7 +24,6 @@ function Login() {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState(false);
   const [logIn, setLogIn] = useRecoilState(isLoggedIn);
-
   const onSubmitValid = async () => {
     const userInfo = getValues();
     const result = await login(userInfo);
@@ -47,6 +46,10 @@ function Login() {
   };
 
   useEffect(() => {
+    console.log(errors);
+  });
+
+  useEffect(() => {
     setLogIn(Boolean(localStorage.getItem("isLoggedIn")));
     if (logIn) {
       console.log("로그인");
@@ -57,7 +60,7 @@ function Login() {
   return (
     <Container>
       <FormBox>
-        <h1>{loginError ? "로그인에 실패했습니다" : ""}</h1>
+        <Title>{loginError ? "로그인에 실패했습니다" : "로그인"}</Title>
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
             {...register("email", {
@@ -70,7 +73,7 @@ function Login() {
             placeholder="Email"
             hasError={Boolean(errors?.email?.message)}
           />
-          <span>{errors?.email?.message}</span>
+          <Error>{errors?.email?.message}</Error>
           <Input
             {...register("password", {
               required: "비밀번호를 입력해주세요.",
@@ -83,7 +86,7 @@ function Login() {
             type="password"
             hasError={Boolean(errors?.password?.message)}
           />
-          <span>{errors?.password?.message}</span>
+          <Error>{errors?.password?.message}</Error>
           <Button disabled={Object.keys(errors).length !== 0} type="submit">
             Login
           </Button>
