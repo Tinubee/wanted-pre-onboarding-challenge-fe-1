@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { createAccount } from "../api";
+import { Container } from "./Todo";
 
 export const Input = styled.input<{ hasError: boolean }>`
   width: 100%;
@@ -86,53 +87,55 @@ function CreateAccount() {
   };
 
   return (
-    <FormBox>
-      <h1>회원 가입</h1>
-      <form onSubmit={handleSubmit(onSubmitValid)}>
-        <Input
-          {...register("email", {
-            required: "이메일을 입력해주세요.",
-            pattern: {
-              value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              message: "이메일의 형식이 맞지 않습니다.",
-            },
-          })}
-          placeholder="Email"
-          hasError={Boolean(errors?.email?.message)}
-        />
-        <span>{errors?.email?.message}</span>
-        <Input
-          {...register("password", {
-            required: "비밀번호를 입력해주세요.",
-            minLength: {
-              value: 8,
-              message: "최소 8자 이상의 비밀번호를 입력해주세요.",
-            },
-          })}
-          placeholder="Password"
-          type="password"
-          hasError={Boolean(errors?.password?.message)}
-        />
-        <span>{errors?.password?.message}</span>
-        <Input
-          {...register("password2", {
-            required: "비밀번호를 입력해주세요.",
-            minLength: {
-              value: 8,
-              message: "최소 8자 이상의 비밀번호를 입력해주세요.",
-            },
-          })}
-          placeholder="Password Again"
-          type="password"
-          hasError={Boolean(errors?.password2?.message)}
-        />
-        <span>{errors?.password2?.message}</span>
-        <Button disabled={Object.keys(errors).length !== 0} type="submit">
-          Create Account
-        </Button>
-        <Link to={"/auth"}>계정이 있습니까 ? ➡️</Link>
-      </form>
-    </FormBox>
+    <Container>
+      <FormBox>
+        <h1>회원 가입</h1>
+        <form onSubmit={handleSubmit(onSubmitValid)}>
+          <Input
+            {...register("email", {
+              required: "이메일을 입력해주세요.",
+              pattern: {
+                value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                message: "이메일의 형식이 맞지 않습니다.",
+              },
+            })}
+            placeholder="Email"
+            hasError={Boolean(errors?.email?.message)}
+          />
+          <span>{errors?.email?.message}</span>
+          <Input
+            {...register("password", {
+              required: "비밀번호를 입력해주세요.",
+              minLength: {
+                value: 8,
+                message: "최소 8자 이상의 비밀번호를 입력해주세요.",
+              },
+            })}
+            placeholder="Password"
+            type="password"
+            hasError={Boolean(errors?.password?.message)}
+          />
+          <span>{errors?.password?.message}</span>
+          <Input
+            {...register("password2", {
+              required: "비밀번호를 입력해주세요.",
+              minLength: {
+                value: 8,
+                message: "최소 8자 이상의 비밀번호를 입력해주세요.",
+              },
+            })}
+            placeholder="Password Again"
+            type="password"
+            hasError={Boolean(errors?.password2?.message)}
+          />
+          <span>{errors?.password2?.message}</span>
+          <Button disabled={Object.keys(errors).length !== 0} type="submit">
+            Create Account
+          </Button>
+          <Link to={"/auth"}>계정이 있습니까 ? ➡️</Link>
+        </form>
+      </FormBox>
+    </Container>
   );
 }
 

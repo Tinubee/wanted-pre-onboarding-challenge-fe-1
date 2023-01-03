@@ -1,5 +1,7 @@
+import { Container } from "./Todo";
+
 function Home() {
-  return <h1>Home</h1>;
+  return <Container></Container>;
 }
 
 export default Home;

@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { login } from "../api";
 import { isLoggedIn } from "../atoms";
 import { Button, FormBox, Input } from "./CreateAccount";
+import { Container } from "./Todo";
 
 function Login() {
   const {
@@ -21,15 +22,23 @@ function Login() {
     },
   });
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState(false);
   const [logIn, setLogIn] = useRecoilState(isLoggedIn);
 
   const onSubmitValid = async () => {
     const userInfo = getValues();
     const result = await login(userInfo);
 
-    const { message, token } = result;
-    console.log(message);
-    console.log(token);
+    const { details, token } = result;
+    console.log(result);
+    if (details !== undefined) {
+      setLoginError(true);
+      setValue("email", "");
+      setValue("password", "");
+      return;
+    }
+
+    setLoginError(false);
     localStorage.setItem("TOKEN", token);
     localStorage.setItem("isLoggedIn", "true");
     navigate("/todo");
@@ -46,40 +55,42 @@ function Login() {
   }, [logIn, setLogIn, navigate]);
 
   return (
-    <FormBox>
-      <h1>로그인</h1>
-      <form onSubmit={handleSubmit(onSubmitValid)}>
-        <Input
-          {...register("email", {
-            required: "이메일을 입력해주세요.",
-            pattern: {
-              value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              message: "이메일의 형식이 맞지 않습니다.",
-            },
-          })}
-          placeholder="Email"
-          hasError={Boolean(errors?.email?.message)}
-        />
-        <span>{errors?.email?.message}</span>
-        <Input
-          {...register("password", {
-            required: "비밀번호를 입력해주세요.",
-            minLength: {
-              value: 8,
-              message: "최소 8자 이상의 비밀번호를 입력해주세요.",
-            },
-          })}
-          placeholder="Password"
-          type="password"
-          hasError={Boolean(errors?.password?.message)}
-        />
-        <span>{errors?.password?.message}</span>
-        <Button disabled={Object.keys(errors).length !== 0} type="submit">
-          Login
-        </Button>
-      </form>
-      <Link to={"/sign"}>계정이 없습니까 ? ➡️</Link>
-    </FormBox>
+    <Container>
+      <FormBox>
+        <h1>{loginError ? "로그인에 실패했습니다" : ""}</h1>
+        <form onSubmit={handleSubmit(onSubmitValid)}>
+          <Input
+            {...register("email", {
+              required: "이메일을 입력해주세요.",
+              pattern: {
+                value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                message: "이메일의 형식이 맞지 않습니다.",
+              },
+            })}
+            placeholder="Email"
+            hasError={Boolean(errors?.email?.message)}
+          />
+          <span>{errors?.email?.message}</span>
+          <Input
+            {...register("password", {
+              required: "비밀번호를 입력해주세요.",
+              minLength: {
+                value: 8,
+                message: "최소 8자 이상의 비밀번호를 입력해주세요.",
+              },
+            })}
+            placeholder="Password"
+            type="password"
+            hasError={Boolean(errors?.password?.message)}
+          />
+          <span>{errors?.password?.message}</span>
+          <Button disabled={Object.keys(errors).length !== 0} type="submit">
+            Login
+          </Button>
+        </form>
+        <Link to={"/sign"}>계정이 없습니까 ? ➡️</Link>
+      </FormBox>
+    </Container>
   );
 }
 
