@@ -4,14 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { login } from "../api";
 import { isLoggedIn } from "../atoms";
-import { Button, Error, FormBox, Input, Title } from "./CreateAccount";
-import { Container } from "./Todo";
+import Button from "../components/Button";
+import FormBox from "../components/FormBox";
+import Input from "../components/Input";
+import Layout from "../components/Layout";
+import { Error, Title } from "./CreateAccount";
 
 function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     getValues,
     setValue,
   } = useForm({
@@ -58,7 +61,7 @@ function Login() {
   }, [logIn, setLogIn, navigate]);
 
   return (
-    <Container>
+    <Layout>
       <FormBox>
         <Title>{loginError ? "로그인에 실패했습니다" : "로그인"}</Title>
         <form onSubmit={handleSubmit(onSubmitValid)}>
@@ -87,13 +90,11 @@ function Login() {
             hasError={Boolean(errors?.password?.message)}
           />
           <Error>{errors?.password?.message}</Error>
-          <Button disabled={Object.keys(errors).length !== 0} type="submit">
-            Login
-          </Button>
+          <Button value="로그인" disabled={!isValid} type="submit" />
+          <Link to={"/sign"}>계정이 없습니까 ? ➡️</Link>
         </form>
-        <Link to={"/sign"}>계정이 없습니까 ? ➡️</Link>
       </FormBox>
-    </Container>
+    </Layout>
   );
 }
 

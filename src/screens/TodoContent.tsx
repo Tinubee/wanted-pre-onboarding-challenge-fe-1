@@ -126,9 +126,7 @@ function TodoContent() {
               <FontAwesomeIcon icon={faXmark} onClick={handleModify} />
             )}
 
-            {isChange ? (
-              ""
-            ) : (
+            {isChange ? null : (
               <Button type="submit">
                 <FontAwesomeIcon icon={faSave} />
               </Button>
@@ -141,6 +139,7 @@ function TodoContent() {
             value={todo?.title || ""}
             onChange={handleChangeTitleInput}
             disabled={isChange}
+            autoComplete="off"
           />
           <hr />
           <InputDataText

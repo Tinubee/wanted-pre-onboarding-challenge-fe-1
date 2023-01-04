@@ -6,25 +6,14 @@ import styled from "styled-components";
 import { Title } from "./CreateAccount";
 import { isLoggedIn } from "../atoms";
 import Login from "./Login";
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  max-width: 600px;
-  margin: 10px auto;
-  border: 1px solid white;
-  height: 80vh;
-  border-radius: 10px;
-`;
+import Layout from "../components/Layout";
 
 const Wrapper = styled.div`
   text-align: center;
   a {
     cursor: pointer;
     :hover {
-      color: #48c435;
+      color: ${(props) => props.theme.accentColor};
     }
   }
 `;
@@ -43,22 +32,20 @@ const LittleText = styled.span`
 function Home() {
   const check = useRecoilValue(isLoggedIn);
   return (
-    <Container>
-      <Wrapper>
-        {check ? (
-          <Login />
-        ) : (
-          <>
-            <Title>Todo List</Title>
-            <Text>로그인 후 이용하실 수 있습니다.</Text>
-            <Link to={"/auth"}>
-              <LittleText> 로그인 하러 가기</LittleText>
-              <FontAwesomeIcon icon={faArrowCircleRight} />
-            </Link>
-          </>
-        )}
-      </Wrapper>
-    </Container>
+    <Layout>
+      {check ? (
+        <Login />
+      ) : (
+        <Wrapper>
+          <Title>Todo List</Title>
+          <Text>로그인 후 이용하실 수 있습니다.</Text>
+          <Link to={"/auth"}>
+            <LittleText> 로그인 하러 가기</LittleText>
+            <FontAwesomeIcon icon={faArrowCircleRight} />
+          </Link>
+        </Wrapper>
+      )}
+    </Layout>
   );
 }
 

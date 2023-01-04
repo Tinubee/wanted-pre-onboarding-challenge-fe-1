@@ -8,7 +8,7 @@ export interface IToDo {
   updatedAt: string;
 }
 
-export const isLoggedIn = atom({
+export const isLoggedIn = atom<boolean>({
   key: "isLoggedIn",
   default: Boolean(localStorage.getItem("isLoggedIn")),
 });

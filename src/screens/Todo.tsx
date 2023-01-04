@@ -1,15 +1,13 @@
-import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { getTodos } from "../api";
 import { toDosListAtom } from "../atoms";
-import CreateTodo from "../components/CreateTodo";
+import CTodo from "../components/CTodo";
+import CreateTodo from "./CreateTodo";
 
-export const Container = styled.div`
+const Wrapper = styled.div`
   padding: 0 20px;
   max-width: 600px;
   margin: 10px auto;
@@ -38,20 +36,6 @@ export const TodoList = styled.div`
   width: 48.5%;
 `;
 
-const TodoTitle = styled.div`
-  display: flex;
-  border: 1px solid white;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  font-weight: 400;
-  cursor: pointer;
-  justify-content: space-between;
-  &:hover {
-    background-color: ${(props) => props.theme.hoverColor};
-  }
-`;
-
 function Todo() {
   const [toDos, setToDos] = useRecoilState(toDosListAtom);
 
@@ -66,7 +50,7 @@ function Todo() {
   }, []);
 
   return (
-    <Container>
+    <Wrapper>
       <Title>할 일 목록</Title>
       <hr />
       <CreateTodo />
@@ -74,17 +58,12 @@ function Todo() {
       <TodoListContainer>
         <TodoList>
           {toDos.map((todo) => (
-            <Link key={todo.id} to={`${todo.id}`}>
-              <TodoTitle>
-                <div>{todo.title}</div>
-                <FontAwesomeIcon icon={faArrowCircleRight} />
-              </TodoTitle>
-            </Link>
+            <CTodo key={todo.id} id={todo.id} title={todo.title} />
           ))}
         </TodoList>
         <Outlet />
       </TodoListContainer>
-    </Container>
+    </Wrapper>
   );
 }
 
