@@ -28,7 +28,7 @@ const Title = styled.h1`
 const TodoListContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 65%;
+  height: 60%;
 `;
 
 export const TodoList = styled.div`

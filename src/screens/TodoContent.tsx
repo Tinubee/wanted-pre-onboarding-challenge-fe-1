@@ -31,7 +31,7 @@ const InputDataText = styled.textarea`
   font-weight: 400;
   font-size: 16px;
   width: 100%;
-  height: 270px;
+  height: 200px;
 `;
 
 const Icon = styled.div`

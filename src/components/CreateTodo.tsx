@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { Button, Input } from "../screens/CreateAccount";
+import { Button, Error, Input } from "../screens/CreateAccount";
 import { createTodo } from "../api";
 import { useSetRecoilState } from "recoil";
 import { toDosListAtom } from "../atoms";
@@ -14,7 +14,13 @@ function CreateTodo() {
     formState: { errors },
     getValues,
     setValue,
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      todo: "",
+      content: "",
+    },
+  });
   const setToDos = useSetRecoilState(toDosListAtom);
   const handleValid = async () => {
     const { todo, content } = getValues();
@@ -37,6 +43,7 @@ function CreateTodo() {
         placeholder="제목을 적어주세요."
         hasError={Boolean(errors?.todo?.message)}
       />
+      <Error>{errors?.todo?.message}</Error>
       <Input
         {...register("content")}
         placeholder="내용을 적어주세요."
