@@ -70,6 +70,7 @@ function Login() {
             })}
             placeholder="Email"
             hasError={Boolean(errors?.email?.message)}
+            autoComplete="off"
           />
           <Error>{errors?.email?.message}</Error>
           <Input
@@ -83,6 +84,7 @@ function Login() {
             placeholder="Password"
             type="password"
             hasError={Boolean(errors?.password?.message)}
+            autoComplete="off"
           />
           <Error>{errors?.password?.message}</Error>
           <Button value="로그인" disabled={!isValid} type="submit" />

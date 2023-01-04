@@ -71,6 +71,7 @@ function CreateAccount() {
             })}
             placeholder="Email"
             hasError={Boolean(errors?.email?.message)}
+            autoComplete="off"
           />
           <Error>{errors?.email?.message}</Error>
           <Input
@@ -84,6 +85,7 @@ function CreateAccount() {
             placeholder="Password"
             type="password"
             hasError={Boolean(errors?.password?.message)}
+            autoComplete="off"
           />
           <Error>{errors?.password?.message}</Error>
           <Input
@@ -97,6 +99,7 @@ function CreateAccount() {
             placeholder="Password Again"
             type="password"
             hasError={Boolean(errors?.password2?.message)}
+            autoComplete="off"
           />
           <Error>{errors?.password2?.message}</Error>
           <Button value={"회원가입"} disabled={!isValid} type="submit" />
