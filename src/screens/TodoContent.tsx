@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { deleteTodo, getTodoById, updateTodo } from "../api";
+import { deleteTodo, getTodoById, getTodos, updateTodo } from "../api";
 import { toDoAtom, toDosListAtom } from "../atoms";
 import { TodoList } from "./Todo";
 
@@ -83,6 +83,11 @@ function TodoContent() {
     setIsChange(!isChange);
   };
 
+  const getTodoList = async () => {
+    const todoList = await getTodos().then((res) => res);
+    setToDos(todoList.data);
+  };
+
   useEffect(() => {
     getContent();
     setValue("toDoTitle", todo?.title);
@@ -98,6 +103,8 @@ function TodoContent() {
       content: toDoContent,
     };
     await updateTodo(data, todoId);
+
+    getTodoList();
   };
 
   const handleDeleteTodo = async () => {
