@@ -1,8 +1,11 @@
 import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Title } from "./CreateAccount";
+import { isLoggedIn } from "../atoms";
+import Login from "./Login";
 
 const Container = styled.div`
   display: flex;
@@ -38,15 +41,22 @@ const LittleText = styled.span`
 `;
 
 function Home() {
+  const check = useRecoilValue(isLoggedIn);
   return (
     <Container>
       <Wrapper>
-        <Title>Todo List</Title>
-        <Text>로그인 후 이용하실 수 있습니다.</Text>
-        <Link to={"/auth"}>
-          <LittleText> 로그인 하러 가기</LittleText>
-          <FontAwesomeIcon icon={faArrowCircleRight} />
-        </Link>
+        {check ? (
+          <Login />
+        ) : (
+          <>
+            <Title>Todo List</Title>
+            <Text>로그인 후 이용하실 수 있습니다.</Text>
+            <Link to={"/auth"}>
+              <LittleText> 로그인 하러 가기</LittleText>
+              <FontAwesomeIcon icon={faArrowCircleRight} />
+            </Link>
+          </>
+        )}
       </Wrapper>
     </Container>
   );
