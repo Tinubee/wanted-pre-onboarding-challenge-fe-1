@@ -45,7 +45,7 @@ const Icon = styled.div`
     border-radius: 10px;
     cursor: pointer;
     &:hover {
-      background-color: #48c435;
+      background-color: ${(props) => props.theme.hoverColor};
     }
   }
 `;

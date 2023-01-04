@@ -60,6 +60,10 @@ export const Button = styled.button`
   padding: 8px 0px;
   font-weight: 600;
   width: 100%;
+  cursor: pointer;
+  &:hover {
+    background-color: ${(props) => props.theme.borderColor};
+  }
 `;
 
 function CreateAccount() {

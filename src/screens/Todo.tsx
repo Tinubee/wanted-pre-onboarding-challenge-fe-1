@@ -48,7 +48,7 @@ const TodoTitle = styled.div`
   cursor: pointer;
   justify-content: space-between;
   &:hover {
-    background-color: #48c435;
+    background-color: ${(props) => props.theme.hoverColor};
   }
 `;
 
