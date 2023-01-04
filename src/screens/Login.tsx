@@ -32,7 +32,7 @@ function Login() {
     const result = await login(userInfo);
 
     const { details, token } = result;
-    console.log(result);
+
     if (details !== undefined) {
       setLoginError(true);
       setValue("email", "");
@@ -49,13 +49,8 @@ function Login() {
   };
 
   useEffect(() => {
-    console.log(errors);
-  });
-
-  useEffect(() => {
     setLogIn(Boolean(localStorage.getItem("isLoggedIn")));
     if (logIn) {
-      console.log("로그인");
       navigate("/todo");
     }
   }, [logIn, setLogIn, navigate]);
