@@ -59,3 +59,7 @@ localhost환경에서 서버는 port번호 8080, 클라이언트는 port번호 3
 ```
 npm install && npm run start
 ```
+
+### ✍️ 구현과정
+✔︎ [사전과제 구현과정 velog](https://velog.io/@tinubee/%EC%9B%90%ED%8B%B0%EB%93%9C-%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%82%AC%EC%A0%84%EA%B3%BC%EC%A0%9C)
+
