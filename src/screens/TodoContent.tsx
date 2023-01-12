@@ -1,4 +1,5 @@
 import {
+  faCheck,
   faPen,
   faSave,
   faTrash,
@@ -58,6 +59,17 @@ const Button = styled.button`
   border-radius: 5px;
 `;
 
+const Box = styled.div`
+  position: absolute;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 40px;
+  color: black;
+  font-weight: 600;
+  svg {
+    border: 1px solid black;
+  }
+`;
+
 function TodoContent() {
   const { todoId } = useParams();
   const [todo, setTodo] = useRecoilState(toDoAtom);
@@ -65,6 +77,7 @@ function TodoContent() {
   const [isChange, setIsChange] = useState(true);
   const navigate = useNavigate();
   const { register, handleSubmit, setValue, getValues } = useForm();
+  const [deleteClicked, setDeleteClicked] = useState(false);
 
   const getContent = async () => {
     const result = await getTodoById(todoId);
@@ -115,43 +128,68 @@ function TodoContent() {
     navigate(`/todo`);
   };
 
-  return (
-    <TodoList>
-      <Wrapper>
-        <form onSubmit={handleSubmit(onSubmitValid)}>
-          <Icon>
-            {isChange ? (
-              <FontAwesomeIcon icon={faPen} onClick={handleModify} />
-            ) : (
-              <FontAwesomeIcon icon={faXmark} onClick={handleModify} />
-            )}
+  const handleCheckDelete = () => {
+    setDeleteClicked(true);
+  };
 
-            {isChange ? null : (
-              <Button type="submit">
-                <FontAwesomeIcon icon={faSave} />
-              </Button>
-            )}
-            <FontAwesomeIcon icon={faTrash} onClick={handleDeleteTodo} />
-          </Icon>
-          <hr />
-          <InputData
-            {...register("toDoTitle")}
-            value={todo?.title || ""}
-            onChange={handleChangeTitleInput}
-            disabled={isChange}
-            autoComplete="off"
-          />
-          <hr />
-          <InputDataText
-            {...register("toDoContent")}
-            autoComplete="off"
-            value={todo?.content || ""}
-            onChange={handleChangeContentInput}
-            disabled={isChange}
-          />
-        </form>
-      </Wrapper>
-    </TodoList>
+  const handleCancleDelete = () => {
+    setDeleteClicked(false);
+  };
+
+  return (
+    <>
+      <TodoList>
+        <Wrapper>
+          <form onSubmit={handleSubmit(onSubmitValid)}>
+            <Icon>
+              {isChange ? (
+                <FontAwesomeIcon icon={faPen} onClick={handleModify} />
+              ) : (
+                <FontAwesomeIcon icon={faXmark} onClick={handleModify} />
+              )}
+
+              {isChange ? null : (
+                <Button type="submit">
+                  <FontAwesomeIcon icon={faSave} />
+                </Button>
+              )}
+              <FontAwesomeIcon icon={faTrash} onClick={handleCheckDelete} />
+              {deleteClicked ? (
+                <Box style={{ width: 300, height: 60 }}>
+                  <Icon>
+                    <div>정말로 삭제 하시겠습니까 ?</div>
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      onClick={handleCancleDelete}
+                    />
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      onClick={handleDeleteTodo}
+                    />
+                  </Icon>
+                </Box>
+              ) : null}
+            </Icon>
+            <hr />
+            <InputData
+              {...register("toDoTitle")}
+              value={todo?.title || ""}
+              onChange={handleChangeTitleInput}
+              disabled={isChange}
+              autoComplete="off"
+            />
+            <hr />
+            <InputDataText
+              {...register("toDoContent")}
+              autoComplete="off"
+              value={todo?.content || ""}
+              onChange={handleChangeContentInput}
+              disabled={isChange}
+            />
+          </form>
+        </Wrapper>
+      </TodoList>
+    </>
   );
 }
 
