@@ -1,9 +1,10 @@
 import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { Outlet } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { getTodos } from "../api";
-import { toDosListAtom } from "../atoms";
+import { toDosListAtom, IToDo } from "../atoms";
 import CTodo from "../components/CTodo";
 import CreateTodo from "./CreateTodo";
 
@@ -37,17 +38,13 @@ export const TodoList = styled.div`
 `;
 
 function Todo() {
-  const [toDos, setToDos] = useRecoilState(toDosListAtom);
+  const setToDos = useSetRecoilState<IToDo[]>(toDosListAtom);
 
-  const getTodoList = async () => {
-    const todoList = await getTodos().then((res) => res);
-    setToDos(todoList.data);
-  };
+  const { isLoading, data: fetchToDos } = useQuery("toDos", getTodos);
 
   useEffect(() => {
-    getTodoList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setToDos(fetchToDos?.data);
+  }, [fetchToDos, setToDos]);
 
   return (
     <Wrapper>
@@ -56,11 +53,13 @@ function Todo() {
       <CreateTodo />
       <hr />
       <TodoListContainer>
-        <TodoList>
-          {toDos.map((todo) => (
-            <CTodo key={todo.id} id={todo.id} title={todo.title} />
-          ))}
-        </TodoList>
+        {isLoading ? null : (
+          <TodoList>
+            {fetchToDos.data.map((todo: IToDo) => (
+              <CTodo key={todo.id} id={todo.id} title={todo.title} />
+            ))}
+          </TodoList>
+        )}
         <Outlet />
       </TodoListContainer>
     </Wrapper>
